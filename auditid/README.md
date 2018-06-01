@@ -4,8 +4,9 @@ List audit ids for a path or locate a file given an audit id
 
 Author: Bill Schoen <wjs@us.ibm.com>
 
-PROPERTY OF IBM
-COPYRIGHT IBM CORP. 1998, 2007
+Property of IBM
+
+Copyright IBM Corp. 1998, 2007
 
 
 ## Syntax  
