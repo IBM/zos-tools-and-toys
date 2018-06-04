@@ -1,4 +1,4 @@
-# zos-tools-and-toys
+# z/OS Tools & Toys
 
 All packages listed here are free. There are no warranties of any kind, and there is no service or technical support available for these from IBM.
 
