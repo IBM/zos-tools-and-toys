@@ -2,8 +2,9 @@
 
 Author: Bill Schoen  <wjs@us.ibm.com>
  
-PROPERTY OF IBM
-COPYRIGHT IBM CORP. 2006
+Property of IBM
+
+Copyright IBM Corp. 2006
      
 ## Purpose
 
