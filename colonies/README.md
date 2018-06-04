@@ -1,30 +1,21 @@
-Author: Bill Schoen  WSCHOEN at KGNVMC, schoen@vnet.ibm.com
+# colonies
 
-Title: List colony address space names -- REQUIRES AT LEAST OS390R2
+List colony address space names
 
-PROPERTY OF IBM
-COPYRIGHT IBM CORP. 1998
+Author: Bill Schoen <wjs@us.ibm.com>
 
-colonies
-========
+Property of IBM
 
-  Syntax:  colonies
+Copyright IBM Corp. 1998
 
-  This lists the name of any colony address spaces.
-  This utility can be useful to determine the names of colony
-  address spaces if you need to terminate them.
+## Syntax
 
+    colonies
 
-  Install Information
-  ===================
+This lists the name of any colony address spaces. This utility can be useful to determine the names of colony address spaces if you need to terminate them.
 
-  Place colonies in a directory where you keep executable programs.
-  Make sure the permission bits are set to 0555 (or at least 0500)
-  so that a superuser can execute it.  If you would like it to be
-  useable by anyone, set the permissions to 04555 to make it a
-  setuid program.  The file owner must be uid 0.
+## Installation
 
-  If you obtain this program via FTP, the program is a REXX program
-  in source form.  Transfer it in text mode.  As a reminder, the
-  filename is colonies.txt.
-.
+Place colonies in a directory where you keep executable programs. Make sure the permission bits are set to 0555 (or at least 0500) so that a superuser can execute it.  If you would like it to be   useable by anyone, set the permissions to 04555 to make it a setuid program.  The file owner must be uid 0.
+
+If you obtain this program via FTP, the program is a REXX program in source form.  Transfer it in text mode.  As a reminder, the filename is colonies.rexx.
