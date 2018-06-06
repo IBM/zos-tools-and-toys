@@ -18,28 +18,28 @@ The format of the command is illustrated below:
 
 ## Syntax
 
-     KEYXFER   OPER, LABEL, DSN,  OPTION                               
-                                                                        
-     OPER      = READ_PKDS reads from the transmitted data set                                         
-                 WRITE_PKDS writes to the transmitted data set                                          
-                 READ_CKDS reads from the transmitted data set                                         
-                 WRITE_CKDS writes to the transmitted data set                                          
-     LABEL     = label of PKDS or CKDS record to be retreived/stored            
-     DSN       = name of data set holding the token                     
-     OPTION    = OVERWRITE a label in the PKDS or CKDS.                 
-                 If OVERWRITE is specified in the option                
-                 field then an existing label will                 
-                 be overwritten with the token from the                 
+     KEYXFER   OPER, LABEL, DSN,  OPTION
+
+     OPER      = READ_PKDS reads from the transmitted data set
+                 WRITE_PKDS writes to the transmitted data set
+                 READ_CKDS reads from the transmitted data set
+                 WRITE_CKDS writes to the transmitted data set
+     LABEL     = label of PKDS or CKDS record to be retreived/stored
+     DSN       = name of data set holding the token
+     OPTION    = OVERWRITE a label in the PKDS or CKDS.
+                 If OVERWRITE is specified in the option 
+                 field then an existing label will
+                 be overwritten with the token from the
                  transmitted data set.                                        
 
- DATA SET:      A PS or PDS data set can be used.                     
-                An LRECL=80 is recommended, but not required.         
-                The information stored in the KEYXFER data set        
-                consists of the following:                            
-                  Date                                                
-                  KDS  label                                         
-                  Length of token                                     
-                  Token                                               
+ DATA SET:      A PS or PDS data set can be used.
+                An LRECL=80 is recommended, but not required
+                The information stored in the KEYXFER data set
+                consists of the following:
+                  Date
+                  KDS label
+                  Length of token
+                  Token
 
 ## Notes
 
