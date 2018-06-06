@@ -30,7 +30,7 @@ The format of the command is illustrated below:
                  If OVERWRITE is specified in the option 
                  field then an existing label will
                  be overwritten with the token from the
-                 transmitted data set.                                        
+                 transmitted data set.
 
  DATA SET:      A PS or PDS data set can be used.
                 An LRECL=80 is recommended, but not required
