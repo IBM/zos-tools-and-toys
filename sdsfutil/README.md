@@ -2,6 +2,8 @@
 
 Utilities for working with SDSF
 
+Author: Bill Schoen <wjs@us.ibm.com>
+
 ## jes
 
 View and purge jobs.
