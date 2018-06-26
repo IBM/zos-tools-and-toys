@@ -1,0 +1,998 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 2.0//EN">
+<HTML><HEAD>
+<!-- Begin Header Records ------------------------------------------- -->
+<!-- /u/posix/wjs/rexx/rexxfunc.script converted by b2h R1.4 (175) (T -->
+<!--    on 22 Oct 2000 at 17:56:45                                    -->
+<META HTTP-EQUIV="updated"  CONTENT="????-??-??">
+<META HTTP-EQUIV="review"  CONTENT="2001">
+<META HTTP-EQUIV="expires"  CONTENT="2002">
+<TITLE>REXX Function Package for OpenEdition MVS</TITLE>
+</HEAD><BODY>
+<!-- End Header Records --------------------------------------------- -->
+<A NAME=Top_Of_Page>&#32;</A>
+<H1>REXX Function Package for OpenEdition MVS</H1>
+<HR><P><H2><A NAME=Table_Of_Contents>Table of Contents</A></H2><P>
+<P><B><A NAME=Table_Of_Contents_1.0 HREF="#Section_1.0" >REXX Function Package for OpenEdition MVS</A></B><BR>
+<MENU>
+<LI><A NAME=Table_Of_Contents_1.1 HREF="#Section_1.1" >Introduction</A>
+<LI><A NAME=Table_Of_Contents_1.2 HREF="#Section_1.2" >Input and Output using REXX</A>
+<LI><A NAME=Table_Of_Contents_1.3 HREF="#Section_1.3" >Immediate Commands</A>
+<LI><A NAME=Table_Of_Contents_1.4 HREF="#Section_1.4" >Functions</A>
+<MENU>
+<LI><A NAME=Table_Of_Contents_1.4.1 HREF="#Section_1.4.1" >BPXWUNIX</A>
+<LI><A NAME=Table_Of_Contents_1.4.2 HREF="#Section_1.4.2" >CHARIN</A>
+<LI><A NAME=Table_Of_Contents_1.4.3 HREF="#Section_1.4.3" >CHAROUT</A>
+<LI><A NAME=Table_Of_Contents_1.4.4 HREF="#Section_1.4.4" >CHARS</A>
+<LI><A NAME=Table_Of_Contents_1.4.5 HREF="#Section_1.4.5" >CHMOD</A>
+<LI><A NAME=Table_Of_Contents_1.4.6 HREF="#Section_1.4.6" >CONVD2E</A>
+<LI><A NAME=Table_Of_Contents_1.4.7 HREF="#Section_1.4.7" >DIRECTORY</A>
+<LI><A NAME=Table_Of_Contents_1.4.8 HREF="#Section_1.4.8" >ENVIRONMENT</A>
+<LI><A NAME=Table_Of_Contents_1.4.9 HREF="#Section_1.4.9" >EXISTS</A>
+<LI><A NAME=Table_Of_Contents_1.4.10 HREF="#Section_1.4.10" >GETPASS</A>
+<LI><A NAME=Table_Of_Contents_1.4.11 HREF="#Section_1.4.11" >LINEIN</A>
+<LI><A NAME=Table_Of_Contents_1.4.12 HREF="#Section_1.4.12" >LINEOUT</A>
+<LI><A NAME=Table_Of_Contents_1.4.13 HREF="#Section_1.4.13" >LINES</A>
+<LI><A NAME=Table_Of_Contents_1.4.14 HREF="#Section_1.4.14" >OUTTRAP</A>
+<LI><A NAME=Table_Of_Contents_1.4.15 HREF="#Section_1.4.15" >REXXOPT</A>
+<LI><A NAME=Table_Of_Contents_1.4.16 HREF="#Section_1.4.16" >SHCMD</A>
+<LI><A NAME=Table_Of_Contents_1.4.17 HREF="#Section_1.4.17" >SLEEP</A>
+<LI><A NAME=Table_Of_Contents_1.4.18 HREF="#Section_1.4.18" >STREAM</A>
+</MENU>
+<LI><A NAME=Table_Of_Contents_1.5 HREF="#Section_1.5" >ADDRESS TSO</A>
+<MENU>
+<LI><A NAME=Table_Of_Contents_1.5.1 HREF="#Section_1.5.1" >General Information</A>
+<LI><A NAME=Table_Of_Contents_1.5.2 HREF="#Section_1.5.2" >Syntax</A>
+<LI><A NAME=Table_Of_Contents_1.5.3 HREF="#Section_1.5.3" >Command Input</A>
+<LI><A NAME=Table_Of_Contents_1.5.4 HREF="#Section_1.5.4" >Command Output</A>
+<LI><A NAME=Table_Of_Contents_1.5.5 HREF="#Section_1.5.5" >Return Codes</A>
+<LI><A NAME=Table_Of_Contents_1.5.6 HREF="#Section_1.5.6" >Examples</A>
+<LI><A NAME=Table_Of_Contents_1.5.7 HREF="#Section_1.5.7" >Notes and Warnings</A>
+</MENU>
+<LI><A NAME=Table_Of_Contents_1.6 HREF="#Section_1.6" >Installation</A>
+<LI><A NAME=Table_Of_Contents_1.7 HREF="#Section_1.7" >History</A>
+</MENU><HR><P>
+
+<HR>
+<H1><A NAME="Section_1.0" HREF="#Table_Of_Contents_1.0">REXX Function Package for OpenEdition MVS</A></H1>
+<HR>
+<H2><A NAME="Section_1.1" HREF="#Table_Of_Contents_1.1">Introduction</A></H2>
+<P>This function package extends the REXX language on OS/390 when
+used in an OpenEdition MVS REXX environment.  It includes functions for
+standard REXX I/O.  A number of I/O stream commands are provided to help
+control stream processing.  Additional functions are also included to
+easily access some common file services and environment variables.
+<P>Also included with this package is the ability to interrupt a running
+REXX program and enter an immediate REXX command such as TS to start
+interactive tracing.
+<P>The function BPXWUNIX is the only function in this package that
+can also be run outside of an OpenEdition REXX environment, like in TSO.
+<P>Please direct comments and additional requests to
+<PRE>
+   Bill Schoen
+   wjs@us.ibm.com
+</PRE>
+<HR>
+<H2><A NAME="Section_1.2" HREF="#Table_Of_Contents_1.2">Input and Output using REXX</A></H2>
+<P>OpenEdition has a number of facilities for performing I/O.  This
+includes ADDRESS MVS EXECIO and several commands using ADDRESS SYSCALL.
+This function package adds the seven REXX I/O functions.  The STREAM()
+function is for status and control of I/O streams.  The input functions
+are CHARIN() and LINEIN().  CHARS() and LINES() are used to determine if
+data remains in an input stream.  The output functions are CHAROUT() and
+LINEOUT().  Streams can only be used on files in the OpenEdition file
+system hierarchy.  Data sets can be accessed by making the data sets
+visible through the file hierarchy using NFS.
+<P>Streams can be opened implicitly or explicitly.  A stream is
+implicitly opened by using
+a pathname as the stream name for one of the six input or output
+functions.  If the function is CHAROUT or LINEOUT, the file is opened
+for output.  If the file does not exist it is created.  Permission bits
+for newly created files is 0666 applied to your process umask.  The
+position for the first write is set to the end of file unless the
+function call explicitly specifies a write location.
+The file is opened for input if one of the four input functions is
+used.  The stream open will fail if the file does not exist.
+For either input or output, if the pathname cannot be accessed, the
+stream open will fail.
+<P>A stream can be opened for both input and
+output when the stream is implicitly opened.
+The input and output locations are independent of each other.
+If the stream is opened for both input and output, two file descriptors
+are used.  The STREAM CLOSE command will close the stream and,
+therefore, both file descriptors.
+<P>A message is written to stderr if the file cannot be opened.  The I/O
+function returns as though the stream is empty, at end of file, and the
+file cannot be extended.
+<P>A stream can be explicitly opened using the STREAM() function.  File
+streams are explicitly opened using the OPEN command.  Process streams
+are only opened using the POPEN command.  The advantages of explicitly
+opening file streams is that the program can determine that the stream
+open failed.  The program can also have several separate streams for
+the same file.
+<P>When a stream is explicitly opened, the STREAM() function returns a
+string which is the name of the stream.  This is the only name that can
+be used to identify the stream.  Multiple opens for the same pathname
+will open multiple streams, each with its own name.
+<P>Process streams give you the capability to run a shell command and
+either provide its input or receive its output.  To write the
+input for the command, use the POPEN WRITE command.  To receive
+the command output, use the POPEN READ command.  STREAM() will return
+a string which is the name of the process stream.  Use this name on
+the input functions for POPEN READ or output functions for POPEN WRITE.
+<P>A process stream spawns
+<B>/bin/sh -c</B> <I>your_command</I>.
+The process inherits stderr and either stdin or stdout.  If the process
+is opened for read, stdout for the process is a pipe, otherwise stdin is
+a pipe.  The shell completion code is returned as the result for the
+STREAM PCLOSE command.  PCLOSE wll close your end of the pipe and wait
+for the process to terminate.
+<P>These functions are fully enabled for large files (>2GB).  HFS
+currently supports file offsets close to 2**43.  All numbers that are
+input on the functions must be integers.  The default precision for REXX
+is 9 digits.  If arithmetic is used on large numbers, be sure to change
+your precision appropriately using the NUMERIC DIGITS statement.
+<HR>
+<H2><A NAME="Section_1.3" HREF="#Table_Of_Contents_1.3">Immediate Commands</A></H2>
+<P>A REXX program can be interrupted with the interrupt signal, usually
+control-c.  In response to this interrupt, the REXX interrupt handler
+will suspend execution of the REXX program and prompt for an immediate
+command, selected by number.  The following commands are supported&#58;
+<OL>
+<P><LI>Continue execution
+<P><LI>Issue a Halt Interruption
+<P><LI>Start trace
+<P><LI>End trace
+<P><LI>Halt type
+<P><LI>Resume type
+</OL>
+<P>The program can use the function rexxopt() to disable this
+capability or attach this signal handler to other signals.
+<P>REXX programs that are run as setuid or setgid programs cannot be
+interrupted to issue an immediate command.
+<HR>
+<H2><A NAME="Section_1.4" HREF="#Table_Of_Contents_1.4">Functions</A></H2>
+<P>
+<H3><A NAME="Section_1.4.1" HREF="#Table_Of_Contents_1.4.1">BPXWUNIX</A></H3>
+<PRE>
+   BPXWUNIX(cmd&#91;,stdin&#91;,stdout&#91;,stderr&#91;,env&#93;&#93;&#93;&#93;)
+</PRE>
+<P>Run a shell command and optionally provide its stdin and trap its
+stdout and stderr, and export a set of environment variables.  The
+shell is run  passing a single command similar to
+<I>sh -c cmd</I>.  This does not run a login shell.
+<P>This function
+can be used ouside of the UNIX REXX environment (e.g., in TSO).
+<P>When this function is used in such an
+environment, stdin, stdout, stderr, and
+environment variables will not be inherited from the current
+process environment.
+<DL>
+<DT>cmd
+<DD>The shell command you want to run.  The shell is run
+as <I>/bin/sh -c</I> followed by the string you specify
+as the command.
+<DT>stdin
+<DD>An optional argument which is the name of a compound
+variable (stem) that contains input for the command
+or the string "STACK" if the input is on the stack,
+or DD&#58;ddname where ddname is an allocated DD to be read.
+Stdin.0 must contain a number that is the number of
+lines that are to be redirected to the command.
+Stdin.1, stdin.2, ... contain the lines.
+If this argument is not specified, your current stdin
+file is passed to the shell for stdin.
+<DT>stdout
+<DD>An optional argument which is the name of a compound
+variable (stem) which on return, will contain the
+normal output from the command.  Stdout.0 is a number
+that is the number of lines output by the command.
+Stdout.1, stdout.2, ... contain the output lines.
+Stdout can also be specified as the string "STACK" if
+the output is to be returned on the stack,
+or DD&#58;ddname if output is to be written to an allocated DD.
+If this argument is not specified, your current stdout
+file is passed to the shell for stdout.
+<DT>stderr
+<DD>An optional argument which is the name of a compound
+variable (stem) which on return, will contain the
+error output from the command.  Stderr.0 is a number
+that is the number of lines output by the command.
+Stderr.1, stderr.2, ... contain the output lines.
+Stderr can also be specified as the string "STACK" if
+the output is to be returned on the stack,
+or DD&#58;ddname if output is to be written to an allocated DD.
+If this argument is not specified, your current stderr
+file is passed to the shell for stderr.
+<DT>env
+<DD>An optional argument which is the name of a compound
+variable (stem) that contains environment variables
+for the command.  Env.0 must contain a number that is
+t he number of environment variables to be passed to
+the command.  Env.1, env.2, ... contain the variables
+in the form   variable_name=variable_value.
+If this argument is not specified, your current
+environment is passed to the shell for stdin.
+</DL>
+<P>Return Information&#58;
+<P>If the stdout or stderr stems are specified, they will be filled
+as appropriate.
+<P>If the return value of the function is in the range 0-255, it is
+the exit status of the command.  Negative return values indicate
+failure.  This is generally a signal number.  Numbers less than
+-1000 indicate a stop code.
+<P>Examples&#58;
+<PRE>
+   trap output from the ls command and display it&#58;
+ 
+      call bpxwunix 'ls -l',,out.
+      do i=1 to out.0
+         say out.i
+      end
+ 
+   Send output from above to word count and print byte count&#58;
+ 
+      call bpxwunix 'wc',out.,bc.
+      parse var bc.1 . . count
+      say 'byte count is' count
+ 
+   Trap output on stack and feed it to word count&#58;
+ 
+      if bpxwunix('ls -l',,stack)=0 then
+         call bpxwunix 'wc',stack
+ 
+</PRE>
+<P>
+<H3><A NAME="Section_1.4.2" HREF="#Table_Of_Contents_1.4.2">CHARIN</A></H3>
+<PRE>
+   CHARIN(&#91;name&#93;&#91;,&#91;start&#93;&#91;,length&#93;&#93;)
+</PRE>
+<P>Returns a string of up to length characters read from the stream
+specified by name.  The location for the next read is the current
+location increased by the number of characters returned.
+This service does no editing of the data.
+<DL>
+<DT>name
+<DD>the name for the stream can be a pathname or a string that was
+returned from the STREAM OPEN or POPEN commands.  If name is omitted,
+the standard input stream is used.
+<DT>start
+<DD>for a persistent stream, specifies the byte number in the file
+where the read begins.  Start should not be specified for other types of
+streams.
+<DT>length
+<DD>the number of bytes returned by the function.  If length bytes is
+not available in the stream, the function will return the number of
+bytes the is available and mark an error condition on the stream.
+Normally, for non-persistent streams, this function will block until
+length bytes are available.  If length is 0, no characters are read, a
+null string is returned, and the read position is set
+based on the value of start.
+</DL>
+<P>Example&#58;
+<PRE>
+   say charin(file,,256)      /* read next 256 characters     */
+   call charin file,5*80+1,0  /* set read location to the 6th
+                                 80 byte record               */
+</PRE>
+<P>
+<H3><A NAME="Section_1.4.3" HREF="#Table_Of_Contents_1.4.3">CHAROUT</A></H3>
+<PRE>
+   CHAROUT(&#91;name&#93;&#91;,&#91;string&#93;&#91;,start&#93;&#93;)
+</PRE>
+<P>Returns the number of characters remaining after attempting to write
+string to the stream specified by name.  The location for the next write
+is the current location increased by the number of characters returned.
+If string is omitted, no data is written and the write location is to
+the value start.  If start is also omitted, the write position is set to
+the end of file.
+<DL>
+<DT>name
+<DD>the name for the stream can be a pathname or a string that was
+returned from the STREAM OPEN or POPEN commands.  If name is omitted,
+the standard output stream is used.
+<DT>string
+<DD>data to be written to the stream specified by name.  If string is
+omitted, no data is written, 0 is returned, and and the write position
+is set based on the value of start.
+<DT>start
+<DD>for a persistent stream, specifies the byte number in the file
+where the write begins.  Start should not be specified for other types
+of streams.
+<DT>length
+<DD>the number of bytes returned by the function.  If length bytes is
+not available in the stream, the function will return the number of
+bytes the is available and mark an error condition on the stream.
+Normally, for non-persistent streams, this function will block until
+length bytes are available.
+</DL>
+<P>Example&#58;
+<PRE>
+   call charout ,'hello world'esc_n  /* write the string to stdout */
+   call charout file                 /* set write position to end  */
+</PRE>
+<P>
+<H3><A NAME="Section_1.4.4" HREF="#Table_Of_Contents_1.4.4">CHARS</A></H3>
+<PRE>
+   CHARS(&#91;name&#93;)
+</PRE>
+<P>Returns the number of characters remaining in the input stream
+specified by name.  For persistent streams, it is the number of
+characters between the current read location and the end of the stream.
+<P>If the stream was created by the stream POPEN command, CHARS will
+return the number of bytes currently in the pipe, or, if no bytes are
+in the pipe and the process is still active, it will return 1.
+<DL>
+<DT>name
+<DD>the name for the stream can be a pathname or a string that was
+returned from the STREAM OPEN or POPEN commands.  If name is omitted,
+the standard input stream is used.
+</DL>
+<P>Example&#58;
+<PRE>
+   remainder=chars()       /* get number of bytes in the stdin stream */
+</PRE>
+<P>
+<H3><A NAME="Section_1.4.5" HREF="#Table_Of_Contents_1.4.5">CHMOD</A></H3>
+<PRE>
+   CHMOD(pathname,&#91;operation&#93;mode)
+</PRE>
+<P>returns 0 if the mode for the specified pathname is changed,
+otherwise the system call error number is returned.
+<DL>
+<DT>pathname
+<DD>an absolute or relative pathname to a file.
+<DT>operation
+<DD>specifies whether mode bits are to be set, added, or deleted.
+<DL>
+<DT>=
+<DD>set the mode bits.  If an operation is not specified, = is used.
+<DT>+
+<DD>add the mode bits to what is currently set for the file.
+<DT>-
+<DD>remove the mode bits from what is currently set for the file.
+</DL>
+<DT>mode
+<DD>a string of octal digits for the new file mode.
+</DL>
+<P>Example&#58;
+<PRE>
+   call chmod file,660    /* set permissions for owner/group R/W */
+   call chmod file,+4     /* add read permission for other       */
+</PRE>
+<P>
+<H3><A NAME="Section_1.4.6" HREF="#Table_Of_Contents_1.4.6">CONVD2E</A></H3>
+<PRE>
+   CONVD2E(timestamp)
+</PRE>
+<P>Convert a timestamp to POSIX epoch time.
+<P>Returns the time in seconds past the POSIX epoch (1/1/1970).
+The argument is a 14 character string in the form mmddyyyyHHMMSS.
+<P>Example&#58;
+<PRE>
+   say convd2e('04211999071500')  /* posix time for 4/21/99 7&#58;15&#58;00  */
+</PRE>
+<P>
+<H3><A NAME="Section_1.4.7" HREF="#Table_Of_Contents_1.4.7">DIRECTORY</A></H3>
+<PRE>
+   DIRECTORY(&#91;newdirectory&#93;)
+</PRE>
+<P>returns the current directory, first changing it to newdirectory
+if the argument is supplied and you have access to that directory.
+<DL>
+<DT>newdirectory
+<DD>an absolute or relative pathname to a directory
+</DL>
+<P>Example&#58;
+<PRE>
+   call directory '/u/wjs'    /* change current directory to /u/wjs  */
+</PRE>
+<P>
+<H3><A NAME="Section_1.4.8" HREF="#Table_Of_Contents_1.4.8">ENVIRONMENT</A></H3>
+<PRE>
+   ENVIRONMent(variable name&#91;,new value&#93;)
+   ENVIRONMent(variable name&#91;,,operation&#93;)
+</PRE>
+<P>queries and alters environment variables.  The stem __ENVIRONMENT. is
+not altered through this service.  That stem contains the environment
+variables on entry to the REXX program and is available for your use.
+Alterations of the environment will be used on subsequent calls to the
+STREAM POPEN command and ADDRESS SH.
+<DL>
+<DT>variable name
+<DD>the name of the environment variable to operate on.
+If this is the only argument specified, the value of the variable is
+returned and the variable is not effected.
+<DT>new value
+<DD>a string to replace the value of variable name.
+The previous value of the variable is returned.
+<DT>operation
+<DD>an optional argument that specifies the operation to be performed.
+Only the first character is significant.  The values can be&#58;
+<DL>
+<DT>Exists
+<DD>tests the existence of the variable.  The function returns 1 if the
+variable is defined and 0 if it is not defined.
+<DT>Delete
+<DD>deletes the variable from the environment if it exists.
+The function always returns 1.
+</DL>
+</DL>
+<P>Example&#58;
+<PRE>
+   path=environment('PATH')        /* get value of PATH env variable  */
+   call environment 'PATH','.'     /* reset PATH to current directory */
+   call environment 'PATH',,'d'    /* delete PATH env variable        */
+</PRE>
+<P>
+<H3><A NAME="Section_1.4.9" HREF="#Table_Of_Contents_1.4.9">EXISTS</A></H3>
+<PRE>
+   EXISTS(file name)
+</PRE>
+<P>returns the full pathname for the specified file.  If the file does
+not exist the function returns a null string.
+<DL>
+<DT>file name
+<DD>a string that names a file.
+</DL>
+<P>Example&#58;
+<PRE>
+   say exists('myfile')  /* print the full path for the file myfile */
+</PRE>
+<P>
+<H3><A NAME="Section_1.4.10" HREF="#Table_Of_Contents_1.4.10">GETPASS</A></H3>
+<PRE>
+   GETPASS(prompt)
+</PRE>
+<P>Prints <prompt> on the controlling TTY and reads and returns one
+line of input with terminal echo suppressed.
+<DL>
+<DT>prompt
+<DD>an optional string that prints on the controlling TTY
+</DL>
+<P>Example&#58;
+<PRE>
+   psw=getpass('enter password')  /* prompt for password and read it */
+</PRE>
+<P>
+<H3><A NAME="Section_1.4.11" HREF="#Table_Of_Contents_1.4.11">LINEIN</A></H3>
+<PRE>
+   LINEIN(&#91;name&#93;&#91;,&#91;start&#93;&#91;,count&#93;&#93;)
+</PRE>
+<P>Returns no lines or 1 line from the specified string and sets the
+location for the next read to the beginning of the next line.
+The data is assumed to be text.  The newline character is the line
+delimiter and is not returned.
+<P>A null string is returned if no line is returned.  Note that this
+appears exactly the same as null line in the file.  Use the CHARS or
+LINES functions to determine if you are at end of file.  The STREAM
+function can be used to determine if there is an error condition on
+the stream.
+<DL>
+<DT>name
+<DD>the name for the stream can be a pathname or a string that was
+returned from the STREAM OPEN or POPEN commands.  If name is omitted,
+the standard input stream is used.
+<DT>start
+<DD>for a persistent stream this argument can have the value 1 to begin
+reading at the beginning of the stream.  No other value for start is
+supported.  Start should not be specified for other types of streams.
+<DT>count
+<DD>the number of lines, 0 or 1, returned by the function.
+If one line
+is not available in the stream, the function will return a null string
+and mark an error condition on the stream.
+Normally, for non-persistent streams, this function will block until
+a line is available.  If count is 0, no lines are read, a
+null string is returned, and the read position is set to the beginning
+of the stream if start is 1.
+</DL>
+<P>Example&#58;
+<PRE>
+   line=linein(file)     /* read next line          */
+   line=linein(file,1)   /* read first line in file */
+</PRE>
+<P>
+<H3><A NAME="Section_1.4.12" HREF="#Table_Of_Contents_1.4.12">LINEOUT</A></H3>
+<PRE>
+   LINEOUT(&#91;name&#93;&#91;,&#91;string&#93;&#91;,start&#93;&#93;)
+</PRE>
+<P>
+<P>Returns 0 or 1 lines remaining to write after attempting to write
+string to the stream specified by name.  A newline character is written
+following string.  If an error occurs on the write, some data may be
+written to the stream and the function will return the value 1.
+<DL>
+<DT>name
+<DD>the name for the stream can be a pathname or a string that was
+returned from the STREAM OPEN or POPEN commands.  If name is omitted,
+the standard output stream is used.
+<DT>string
+<DD>data to be written to the stream specified by name.  If string is
+omitted, no data is written, 0 is returned, and the write position
+is set based on the value of start.
+<DT>start
+<DD>for a persistent stream this argument can have the value 1 to begin
+writing at the beginning of the stream.  No other value for start is
+supported.  Start should not be specified for other types of streams.
+</DL>
+<P>Example&#58;
+<PRE>
+   call lineout ,'hello world'   /* write the line to stdout */
+</PRE>
+<P>
+<H3><A NAME="Section_1.4.13" HREF="#Table_Of_Contents_1.4.13">LINES</A></H3>
+<PRE>
+   LINES(&#91;name&#93;)
+</PRE>
+<P>returns a 1 if data remains in the stream otherwise 0.  Programs
+should check for a value of 0 or non-zero.
+<P>Example&#58;
+<PRE>
+   more=lines()      /* set more to non-zero if stdin has data */
+</PRE>
+<P>
+<H3><A NAME="Section_1.4.14" HREF="#Table_Of_Contents_1.4.14">OUTTRAP</A></H3>
+<PRE>
+   OUTTRAP(&#91;name&#93;&#91;,&#91;max&#93;&#91;,catopt&#93;&#93;)
+</PRE>
+<P>This function enables or disables the trapping of output from
+commands run using ADDRESS TSO.  It
+returns the name of the variable in which trapped output is stored.
+If trapping is off, the word OFF is returned.
+<P>The following arguments can be specified.
+<DL>
+<DT>name
+<DD>The name of a stem or a variable prefix used to contain command
+output, or the string OFF to turn off trapping.
+<DT>max
+<DD>The maximum number of lines to trap.  If this is not specified or
+is specified as * or a blank the number of lines is set to 999,999,999.
+<DT>catopt
+<DD>If this is specified it must be the string CONCAT or NOCONCAT.  If
+NOCONCAT is specified, output from each command
+is trapped starting with the variable concatenated with 1.  Unused
+variables do not have their values altered.  If CONCAT is specified,
+each command output trapping begins following the previous command
+output.
+</DL>
+<P>See the section on ADDRESS TSO for additional information.
+<P>Example&#58;
+<PRE>
+   call outtrap 'out.',,'NOCONCAT'
+</PRE>
+<P>
+<H3><A NAME="Section_1.4.15" HREF="#Table_Of_Contents_1.4.15">REXXOPT</A></H3>
+<PRE>
+   REXXOPT(&#91;option&#93;&#91;,arg1&#91;,arg2&#93;&#93;)
+</PRE>
+<P>Sets or resets one of the following options&#58;
+<DL>
+<DT>IMMED
+<DD>Associates the immediate command interrupt handler to a signal
+number.  "arg1" is the signal number.
+<DT>NOIMMED
+<DD>Restores the default action for a signal.
+"arg1" is the signal number.
+<DT>VERSION
+<DD>Returns a string showing last compile time.  This can be used
+to verify the version of the function package matches this document.
+See the "History" section for update information.
+</DL>
+<P>Example&#58;
+<PRE>
+  call rexxopt 'immed',sigint /* make interrupt signal prompt for cmd */
+</PRE>
+<P>
+<H3><A NAME="Section_1.4.16" HREF="#Table_Of_Contents_1.4.16">SHCMD</A></H3>
+<P>This name is an alias for BPXWUNIX.  See BPXWUNIX for usage
+information.  This name is provided for compatibility reasons.  The
+preferred name is BPXWUNIX which will also work from TSO and some other
+MVS REXX environments.
+<P>
+<H3><A NAME="Section_1.4.17" HREF="#Table_Of_Contents_1.4.17">SLEEP</A></H3>
+<PRE>
+   SLEEP(seconds)
+</PRE>
+<P>places the process in a signals enabled wait and returns after the
+wait expires.  If a signal interrupts the wait, the function returns the
+number of seconds remaining for the wait, otherwise it returns 0.
+<DL>
+<DT>seconds
+<DD>a positive whole number for the number of seconds to sleep.
+</DL>
+<P>Example&#58;
+<PRE>
+   call sleep 5     /* wait 5 seconds */
+</PRE>
+<P>
+<H3><A NAME="Section_1.4.18" HREF="#Table_Of_Contents_1.4.18">STREAM</A></H3>
+<PRE>
+   STREAM(&#91;name&#93;&#91;,operation&#91;,command&#93;&#93;)
+</PRE>
+<P>returns the state of the stream or the result of the command.
+<DL>
+<DT>name
+<DD>specifies the stream name for the operation.  This argument
+is case sensitive.
+<DT>operation
+<DD>specifies the operation to be performed.  Only the first character
+is significant.  The operations can be&#58;
+<DL>
+<DT>S
+<DD>returns the current state of the stream.  This is the default
+operation.  The following values can be returned&#58;
+<DL>
+<DT>READY
+<DD>The stream is available for normal input or output operations.
+<DT>ERROR
+<DD>The stream encountered an error on an input or output operation.
+After this call, the error condition is reset and normal input or
+output operations can be attempted once again.
+<DT>UNKNOWN
+<DD>The specified stream is not open.
+</DL>
+<DT>D
+<DD>This operation is the same as S with one exception.  When ERROR is
+returned, it is followed by text describing the error.  This text will
+normally contain the error number and reason code if the failure was
+due to a system call failure.
+<DT>C
+<DD>execute a command for the specified stream.  The command is
+specified as the third argument.
+</DL>
+<DT>command
+<DD>specifies the stream command to be executed.  This argument is
+valid only when the operation is C.  The following commands are
+supported&#58;
+<DL>
+<DT>CLEARFILE
+<DD>Truncates a file to zero bytes for a stream opened for write.
+This should only be used on a persistent stream.
+<P>Example&#58;
+<PRE>
+   call stream name,'c','clearfile'       /* empty the file */
+</PRE>
+<DT>CLOSE
+<DD>Closes a stream.  On success the function returns the string READY.
+If the stream is not known, it returns UNKNOWN.
+<P>Example&#58;
+<PRE>
+   call stream file,'c','close'  /* close the stream */
+</PRE>
+<DT>INFILENO
+<DD>Returns the file descriptor number of the input side of a stream.
+The file descriptor can be used on lower level system calls using, for
+example, ADDRESS SYSCALL.
+<P>Example&#58;
+<PRE>
+   fd=stream(name,'c','infileno')      /* get file descriptor for the
+                                          read side of the stream    */
+</PRE>
+<DT>NOSIGNAL
+<DD>Disables Halt Interruption for stream errors.  See SIGNAL command.
+<P>Example&#58;
+<PRE>
+   call stream ,'c','nosignal'    /* disable halt signal for the
+                                     standard input/output stream */
+</PRE>
+<DT>OPEN <open type>
+<DD>Opens a stream.  <open type> should specify either READ or WRITE
+and may contain optional arguments.  If
+<open type> is not specified, READ is assumed.
+The function returns a string which is the name to be used for the
+stream on subsequent I/O functions.  This string is the only name
+by which this stream will be known.  Note that streams do not have to be
+explicitly opened.  A pathname used as a stream name on the other I/O
+functions will cause the stream to be opened and the name of the stream
+is that pathname.
+<P>Optional arguments may be specified with WRITE and optionally
+followed by octal permission bits.  WRITE will always open the file
+with O_CREAT creating the file is it does not exist.
+The additional arguments are&#58;
+<DL>
+<DT>REPLACE
+<DD>This will open the file with O_TRUNC setting the file size to 0.
+<DT>APPEND
+<DD>This will open with O_APPEND causing all writes to be appended to
+the file.
+</DL>
+<P>Example&#58;
+<PRE>
+   file=stream('mydata.text','c','open write') /* open a stream for the
+                                                 file mydata.txt      */
+ 
+   file=stream('mydata.text','c','open write replace') /* same as above
+                                                 but will replace the
+                                                 file if it exists    */
+</PRE>
+<DT>OUTFILENO
+<DD>Returns the file descriptor number of the output side of a stream.
+The file descriptor can be used on lower level system calls using, for
+example, ADDRESS SYSCALL.
+<P>Example&#58;
+<PRE>
+   fd=stream(name,'c','outfileno')      /* get file descriptor for the
+                                           write side of the stream   */
+</PRE>
+<DT>PCLOSE
+<DD>Closes a stream.  On success the function returns the completion
+code for the process run via the POPEN command, or 0.
+<P>Example&#58;
+<PRE>
+   compcd=stream(file,'c','pclose') /* close get completion code on
+                                       the process stream           */
+</PRE>
+<DT>PID
+<DD>Returns the process id number for the shell process opened with
+POPEN.
+<P>Example&#58;
+<PRE>
+   pid=stream(name,'c','pid')            /* get pid for a stream
+                                            opened with POPEN     */
+</PRE>
+<DT>POPEN <open type>
+<DD>Opens a pipe to a shell command which is specified by the stream
+name. <open type> must specify either
+READ or WRITE.  If READ is specified, the input functions can be used
+to read the standard output from the command.  If WRITE is specified,
+the output functions can be used to pipe data to the standard input
+of the shell command.  In either case, the shell command inherits
+the standard error file for the calling process.
+<DD>The command that is run is always /bin/sh -c followed by the
+specified shell command.  This means the completion code is that which is
+returned by the shell.  It usually returns the command's completion
+code.  The completion code can be obtained using the PCLOSE command.
+<P>The function returns a string which is the name to be used for the
+stream on subsequent I/O functions.  This string is the only name
+by which this stream will be known.
+<P>Example&#58;
+<PRE>
+   file=stream('ls | wc','c','popen read') /* open a pipe stream to the
+                              output from the 'ls | wc' shell command */
+</PRE>
+<DT>QUERY <attribute>
+<DD>Queries a stream attribute returning the result.
+<DL>
+<DT>EXISTS
+<DD>Returns the full pathname of the stream name.  This is equivalent
+to the exists() function but is more portable.  This command
+does not cause a stream to be opened.
+<DT>SIZE
+<DD>Returns the size of the stream.
+This is equivalent to the SIZE stream command but is more
+portable.
+</DL>
+<PRE>
+   say stream('myfile','c','query exists') /* print pathname */
+</PRE>
+<DT>READPOS &#91;location&#93;
+<DD>Returns the position in the file where the next read will begin.
+If location is specified, the position is also set to the byte specified
+by location.  Location is specified as a number optionally preceded by
+one of the following characters&#58;
+<DL>
+<DT>=
+<DD>Specifies an absolute byte location.  This is the default.
+<DT><
+<DD>Specifies an offset from the end of the stream.
+<DT>+
+<DD>Specifies an offset forward from the current location.
+<DT>-
+<DD>Specifies an offset backward from the current location.
+</DL>
+<P>Example&#58;
+<PRE>
+   pos=stream(name,'c','readpos')      /* get read location in file */
+   call stream name,'c','readpos' 5*80+1 /* set read location to 6th
+                                            80 byte record          */
+</PRE>
+<DT>SIGNAL
+<DD>Enables Halt Interruption for stream errors.  Since this REXX
+implementation does not support the NOTREADY signal, the SIGNAL command
+can be used to cause the I/O functions to raise HALT on errors.
+<P>Example&#58;
+<PRE>
+   call stream ,'c','signal'    /* enable the halt signal for the
+                                   standard input/output stream   */
+</PRE>
+<DT>SIZE
+<DD>Returns the size of the file associated with the stream.
+<P>Example&#58;
+<PRE>
+   say stream(name,'c','size')      /* print size of file */
+</PRE>
+<DT>WRITEPOS &#91;location&#93;
+<DD>Returns the position in the file where the next write will begin.
+If location is specified, the position is also set to the byte specified
+by location.  Location is specified as a number optionally preceded by
+one of the following characters&#58;
+<DL>
+<DT>=
+<DD>Specifies an absolute byte location.  This is the default.
+<DT><
+<DD>Specifies an offset from the end of the stream.
+<DT>+
+<DD>Specifies an offset forward from the current location.
+<DT>-
+<DD>Specifies an offset backward from the current location.
+</DL>
+<P>Example&#58;
+<PRE>
+   call stream name,'c','writepos <0'/* set position to end of file*/
+   call stream name,'c','writepos 1' /* set position to start of file */
+</PRE>
+</DL>
+</DL>
+<HR>
+<H2><A NAME="Section_1.5" HREF="#Table_Of_Contents_1.5">ADDRESS TSO</A></H2>
+<P>
+<H3><A NAME="Section_1.5.1" HREF="#Table_Of_Contents_1.5.1">General Information</A></H3>
+<P>Commands addressed to TSO will be run in a TSO TMP running in
+a separate address space and process
+from your REXX program.  This provides the
+capability to run TSO commands but does not provide the capability
+to use TSO commands to affect your REXX environment or have REXX
+statements or other host command environments affect your TSO process.
+<P>The TSO process is started when the first TSO command is run and
+persists until your REXX program
+terminates or you run the TSO LOGOFF command.  This process can be
+observed with a ps shell command as the program bpxwrtso.  Unexpected
+termination of this process will cause the next TSO command to fail
+with return code 16.  A subsequent command will start a new TSO process.
+<P>
+<H3><A NAME="Section_1.5.2" HREF="#Table_Of_Contents_1.5.2">Syntax</A></H3>
+<PRE>
+   address tso &#91;command&#93;
+</PRE>
+<P>command may be any TSO command, clist, or REXX exec that can run
+in a batch TSO TMP.
+<P>
+<H3><A NAME="Section_1.5.3" HREF="#Table_Of_Contents_1.5.3">Command Input</A></H3>
+<P>Most native TSO commands use TGET for input.  This will result in a
+command error and the command will generally terminate.  This
+includes commands that prompt for missing arguments.
+For commands
+that are able to read input, the source of the input will
+first be any data currently on your stack followed by any data in
+your REXX program's standard input stream.  Regardless of whether
+the command processes input, all data on the stack will be queued
+to the TSO command.  The stack will be empty after running any TSO
+command.  The standard input stream may also be queued as input to
+the TSO command.  For example, if you have a file redirected as
+input and you run a TSO command prior to processing that file, some
+or all of the file may be queued to the TSO command.  If input is the
+terminal, queued input may be queued to the TSO command.  This
+characteristic can be used to interact with some TSO commands.
+<P>
+<H3><A NAME="Section_1.5.4" HREF="#Table_Of_Contents_1.5.4">Command Output</A></H3>
+<P>By default, all command output is directed to your REXX process's
+standard output stream.  The outtrap() function can be used to trap
+command output in variables.
+<P>
+<H3><A NAME="Section_1.5.5" HREF="#Table_Of_Contents_1.5.5">Return Codes</A></H3>
+<P>The special REXX variable RC will usually
+contain the return code from the TSO command.
+<P>If the command abends, is not found, or other error is detected,
+special return codes will be set and it is possible that a descriptive
+message will be written to the standard error stream.
+<P>-3 generally means the TSO command was not found.
+<P>16 generally means a processing error was encountered.
+<P>Other negative numbers generally are abend codes.  These should
+be accompanied by a message containing an abend reason code.
+<P>
+<H3><A NAME="Section_1.5.6" HREF="#Table_Of_Contents_1.5.6">Examples</A></H3>
+<P>Simple command
+<PRE>
+   address tso 'time'
+</PRE>
+<P>Trap command output and print
+<PRE>
+   call outtrap out.
+   address tso 'listc'
+   do i=1 to out.0
+      say out.i
+   end
+<PRE>
+<P>Run a REXX exec in TSO
+<PRE>
+   address tso
+   "alloc fi(sysexec) da('schoen.rexx') shr"
+   "myexec"
+<PRE>
+<P>Functional replacement for the tsocmd utility
+<PRE>
+   /* rexx */
+   address tso arg(1)
+   return rc
+<PRE>
+<P>
+<H3><A NAME="Section_1.5.7" HREF="#Table_Of_Contents_1.5.7">Notes and Warnings</A></H3>
+ 
+<P>ADDRESS TSO is still under development and may have some problems.
+It should not introduce any integrity problems, but it is possible
+for this service to loop, hang, or abnormally terminate.
+<P>No specific problems are known at this time.  If you should encounter
+any problems or quirks, please email any information you have regarding
+the problem to Bill Schoen at wjs@us.ibm.com.
+<HR>
+<H2><A NAME="Section_1.6" HREF="#Table_Of_Contents_1.6">Installation</A></H2>
+ 
+<P>This function package is packaged in an unloaded load library.
+Use the TSO
+RECEIVE command with option INDA() to restore it.  The name of this
+file on this server is rexxfunc.unload and must be transfered in binary
+format and restored to an MVS system as an FB 80 data set.
+<P>
+Once on an MVS system, use <I>tso receive inda(rexxfunc.unload)</I>
+to restore the data set.  Unless you direct it elsewhere, it will
+restore in data set prefix.REXXFUNC.LOADLIB.
+<P>
+This load library contains several load modules.
+The function package itself is BPXWRXFP with an alias BPXWRXSA.
+Other modules are replacements for modules distributed with OS390.
+<P>BPXWRXFP and alias must be in the LINKLIST or in your STEPLIB.
+<P>BPXWRTCM must be in the LINKLIST or in your STEPLIB.
+<P>BPXWRTSO is necessary only for ADDRESS TSO and must be in an APF
+authorized library or copied to the HFS in a directory included in
+your PATH environment variable as bpxwrtso and marked as APF
+(using extattr +a bpxwrtso).  If this is kept in an authorized
+library or LPA, it will be necessary to create a file in the HFS
+called bpxwrtso in a directory in your PATH and mark it as sticky
+(use touch bpxwrtso; chmod 1555 bpxwrtso).
+<P>BPXWRXEV is the OpenEdition REXX environment module.
+This module already exists in SYS1.LPALIB.  This module must be
+replaced or loaded from your STEPLIB.  If you have installed a
+previous release of this package and you already installed this in
+LPA you must do this again.
+<P>BPXWRBLD, BPXWREXC, BPXWREXI, BPXWREXT, BPXWRIO, and BPXWRLD
+already exist in SYS1.LINKLIB.  These must
+either be replaced, loaded from STEPLIB, concatenate this library
+ahead of SYS1.LINKLIB in your LINKLIST, or copy these modules to a
+library already ahead of SYS1.LINKLIB.
+Note that these parts along with the new part BPXWRXFP are now
+in a single load module named BPXWREXC.  All the other names are
+aliases.
+<P>The easiest way to install this is to include this load library in
+your STEPLIB environment variable and not alter any system libraries.
+<HR>
+<H2><A NAME="Section_1.7" HREF="#Table_Of_Contents_1.7">History</A></H2>
+ 
+<PRE>
+  2/16/97  Initial external release
+ 
+  5/18/97  External release
+           Added stream command "query exists"
+           Added stream command "query size"
+           Added stream open options REPLACE and BOTH
+           Stream OPEN command now defaults to READ
+ 
+  5/24/97  Internal release
+           Added rexxopt() function; options&#58; immed, noimmed
+           Immediate command support (hi, ht, rt, ts, te) on ctl-c
+           Added shcmd()
+ 
+ 10/03/98  External release
+           Deal with setuid/setgid programs
+           Add rexxopt(version)
+ 
+  1/03/99  fix shcmd for more than 3 args
+           add DD&#58; support to shcmd
+           support long external rexx function names (with TSO PTF)
+           repackage to include all rexx support for shell env
+ 
+  1/22/99  allow shcmd to have input stems with 0 vars
+           add BPXWUNIX that works like shcmd but in TSO and give
+           shcmd alias bpxwunix
+ 
+  7/11/99  fix freemain length&#58; storage leak on external rexx
+           function calls (base fix in R9&#58; PWY0506)
+ 
+  8/07/99  added convd2e function
+ 
+  8/13/99  shcmd and bpxwunix missing closes for stdout/stderr
+ 
+  5/xx/00  (not released) multiplex file processing for shcmd/bpxwunix
+           extended stream open syntax, added getpass() function
+ 10/22/00  Address TSO, outtrap()
+</PRE>
+</BODY></HTML>
