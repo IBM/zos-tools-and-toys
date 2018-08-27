@@ -5,7 +5,8 @@
  Copyright IBM Corp. 2018
  
  This exec implements the UNIX "which" functionality for z/OS as a
- System REXX procedure.  If you add it to the SYS1.SAXREXEC on your system, you can invoke it thus:
+ System REXX procedure.  If you add it to the SYS1.SAXREXEC on your system, 
+ you can invoke it thus:
 
  F AXR,WHICH procname [procnn]
 
