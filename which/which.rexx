@@ -1,7 +1,7 @@
 /* REXX */
 
 /* 
- Author: Andrew Matingly: <andrew_mattingly@au1.ibm.com>
+ Author: Andrew Mattingly: <andrew_mattingly@au1.ibm.com>
  Copyright IBM Corp. 2018
  
  This exec implements the UNIX "which" functionality for z/OS as a
