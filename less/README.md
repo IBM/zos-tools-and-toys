@@ -2,12 +2,8 @@
 
 `less` is a text pager, similar to `more`.  It's a drop-in replacement, and is the default pager on a number of operating systems.  
 
-Contained here are a precompiled binary version (less-xxx.bin.tar.gz) and the source code (less-xxx.tar.gz)
-To use the binary version, issue the following command:
-
-```
-gunzip -c less-xxx.bin.tar.gz | tar -xvf -
-```
+If you are looking for the precompiled binary version for z/OS, download it here:
+[less-530](https://github.com/IBM/zos-tools-and-toys/files/2353283/less-530.bin.tar.gz)
 
 If you want to compile the source code yourself, issue the following commands:
 
