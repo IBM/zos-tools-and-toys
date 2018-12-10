@@ -14,7 +14,7 @@
 # * Send me bug reports, bug fixes, enhancements, requests, flames,
 # * etc.  I can be reached as follows:
 # *
-# *          John Pfuntner      <John_Pfuntner@tivoli.com>
+# *          John Pfuntner      <pfuntner@pobox.com>
 # */
 
 /*                                                       */

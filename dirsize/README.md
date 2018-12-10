@@ -4,7 +4,7 @@ Copyright 1994, 2000, IBM Corporation and Tivoli Systems
 
 All rights reserved
 
-Author: John Pfuntner <John_Pfuntner@tivoli.com>
+Author: John Pfuntner <pfuntner@pobox.com>
 
 ## Description
 
