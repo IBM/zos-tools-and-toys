@@ -1,14 +1,17 @@
 # dirsize
 
-Copyright 1994, 2000, IBM Corporation and Tivoli Systems
+Copyright IBM Corporation 1994, 2000
 
 All rights reserved
 
 Author: John Pfuntner <pfuntner@pobox.com>
 
-## Description
+## Purpose
+Display contents of a directory or
+directories, showing subdirectory structure and the
+number of bytes in each directory.
 
-  See dirsize.1 (the man page) for a description of the command.
+See dirsize.1 (the man page) for a description of the command.
 
 ## Installation
 
