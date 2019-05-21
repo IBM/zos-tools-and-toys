@@ -18,10 +18,9 @@ To use from SYSREXX, this program must be copied to either
 SYS1.SAXREXEC or another library that has been added to the SYSREXX
 libraries using the REXXLIB parmlib statement in your AXRxx parmlib.
 
-When entering shell commands be sure to enclose the string in quotes so
+When entering shell commands, be sure to enclose the string in quotes so
 that the modify command does not uppercase your command.  For example,
-assume you configure the SYSREXX CPF for /
-The ls command might be entered as
+assume you configure the SYSREXX CPF for `/`, the ls command might be entered as
 `/wjssh 'ls -l /etc/'`
 
 Things to be aware of when using sysrexx:
