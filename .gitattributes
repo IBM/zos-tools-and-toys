@@ -1,0 +1,7 @@
+# encode all files as EBCDIC unless mentioned elsewhere
+* git-encoding=iso8859-1 zos-working-tree-encoding=ibm-1047
+
+# encode selected files as ASCII
+*.obj git-encoding=ISO8859-1 zos-working-tree-encoding=iso8859-1
+
+
