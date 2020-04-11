@@ -3,5 +3,6 @@
 
 # encode object files as binary.
 *.obj git-encoding=BINARY zos-working-tree-encoding=BINARY
+*.unload git-encoding=BINARY zos-working-tree-encoding=BINARY
 
 
