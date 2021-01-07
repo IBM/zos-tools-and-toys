@@ -1,7 +1,5 @@
-# z/OS Tools & Toys
+# This repository has moved
 
-All packages listed here are free. There are no warranties of any kind, and there is no service or technical support available for these from IBM.
-
-These tools were designed for z/OS UNIX by IBM developers and testers. Unless otherwise noted, most of the tools are not very portable. They probably will not work well on other UNIX systems without at least a little modification. The packages provided here are working to the satisfaction of the people who ported them. If you have a problem working with a package, open an issue.
-
-If you are looking for ported open source tools for z/OS, [Rocket Software provides an extensive collection](https://www.rocketsoftware.com/zos-open-source/tools).
+The z/OS Tools & Toys repository has **moved**.  It is now located within the
+[official z/OS Github repository](https://github.com/IBM/IBM-Z-zOS/tree/master/zOS-Tools-and-Toys),
+in the **zOS-Tools-and-Toys** directory.
